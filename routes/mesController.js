@@ -53,9 +53,8 @@ mesController.get('/painel/contrato/mes/:id', authenticated, (req, res)=>{
 })
 
 mesController.post('/painel/contrato/mes/pagamento', authenticated, (req, res)=>{
-    
-    let {data_pagamento, valor_pagamento, id} = req.body
 
+    let {data_pagamento, valor_pagamento, id} = req.body
     mesContratos.update({data_pagamento, valor_pagamento}, {where: id}).then(()=>{
         req.flash('sucesso', 'Pagamento adicionado com sucesso!')
         res.redirect(`/painel/contrato/mes/${id}`)
