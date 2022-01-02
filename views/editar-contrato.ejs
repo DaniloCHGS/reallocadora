@@ -1,0 +1,270 @@
+<%-include('partials/_head.ejs')%>
+
+<body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+    
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <%-include('partials/_nav.ejs')  %>
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <%-include('partials/_sideBar.ejs')%>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <form class="content-page" id="editarContato" action="/painel/contrato/editar" method="post">
+            <div class="content">
+
+                <!-- Start Content-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="page-title-box">
+                                <h4 class="page-title">Editar contrato</h4>
+                                <%-include('partials/_msg-sucesso.ejs')%>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
+                                    <div class="form-group">
+                                        <label for="">Número</label>
+                                        <input type="text" class="form-control" name="numero" value=<%=contrato.numero%>>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
+                                    <div class="form-group">
+                                        <label for="">Orgão</label>
+                                        <input type="text" class="form-control" name="orgao" value=<%=contrato.orgao%>>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
+                                    <form class="form-group">
+                                        <label for="">Empenho</label>
+                                        <input type="text" class="form-control" name="empenho" value=<%=contrato.empenho%>>
+                                    </f>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
+                                    <div class="form-group">
+                                        <label for="">Edital</label>
+                                        <input type="text" class="form-control" name="edital" value=<%=contrato.edital%>>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
+                                    <div class="form-group">
+                                        <label for="">Processo</label>
+                                        <input type="text" class="form-control" name="processo" value=<%=contrato.processo%>>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
+                                    <div class="form-group">
+                                        <label for="">Cidade</label>
+                                        <select name="cidade" id="" class="form-control" data-cidade="<%=contrato.cidade%>">
+                                            <option value="">Selecionar cidade</option>
+                                            <%cidades.forEach(cidade=>{ %>
+                                                <option value="<%=cidade.nome%>" data-cidade="<%=cidade.nome%>"><%=cidade.nome%></option>
+                                            <% }) %>
+                                        </select>
+                                        <script>
+                                            let cidade = document.querySelector('select[data-cidade]').getAttribute('data-cidade')
+                                            let optionCidade = [...document.querySelectorAll('option[data-cidade]')]
+                                            optionCidade.forEach(opt=>{
+                                                if(opt.getAttribute('data-cidade') == cidade){
+                                                    opt.setAttribute('selected', true)
+                                                }
+                                            })
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Contratante</label>
+                                        <input type="text" class="form-control" name="contratante" value=<%=contrato.contratante%>>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Inicio</label>
+                                        <input type="text" class="form-control" data-toggle="input-mask" data-mask-format="00-0000" placeholder="mes-ano" name="inicio" id="inicioContrato" value=<%=contrato.inicio%>>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Duração de contrato em meses</label>
+                                        <input type="text" placeholder="Qunatidade de meses" class="form-control" name="termino" id="valorCompra" value=<%=contrato.termino%>>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                        <label for="">Status</label>
+                                        <select name="status" id="statusContrato" class="form-control" data-status="<%=contrato.status%>">
+                                            <option value="Ativo" <%=(contrato.status == 'Ativo') ? 'selected' : ''%> >Ativo</option>
+                                            <option value="Prorrogado" <%=(contrato.status == 'Prorrogado') ? 'selected' : ''%> >Prorrogado</option>
+                                            <option value="Encerrado" <%=(contrato.status == 'Encerrado') ? 'selected' : ''%> >Encerrado</option>
+                                        </select>
+                                        <!-- <script>
+                                            let status = document.querySelector('select[data-status]').getAttribute('data-status')
+                                            let optionStatus = [...document.querySelectorAll('option[data-status]')]
+                                            optionStatus.forEach(opt=>{
+                                                if(opt.value == status){
+                                                    opt.setAttribute('selected', true)
+                                                }
+                                            })
+                                        </script> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" id="infoEncerrado">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="page-title-box">
+                                        <h4 class="page-title">Encerrar contrato</h4>
+                                        <p style="color:red;"><i>Deseja encerrar contrato? Não poderá incluir veículos, editar e gerar meses de contrato</i></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" id="infoProrrogado">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="page-title-box">
+                                        <h4 class="page-title">Prorrogar contrato</h4>
+                                        <p style="color:red;"><i>Deseja prorrogar contrato? Qunatidade de meses será alterada</i></p>
+                                        <label for="confirmarProrrogar">
+                                            <input type="checkbox" name="" id="confirmarProrrogar"> Sim, desejo prorrogar.
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col-4">
+                            <input type="hidden" name="id" value="<%=contrato.id%>">
+                            <input type="submit" class="btn btn-warning" value="Editar Contrato">
+                        </div>
+                    </div>
+
+                </div>
+                <!-- container -->
+
+            </div> <!-- content -->
+
+            <%-include('partials/_footer.ejs')%>
+
+        </form>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- Vendor js -->
+    <script src="/assets/js/vendor.min.js"></script>
+
+    <script src="/assets/libs/jquery-mask-plugin/jquery.mask.min.js"></script>
+
+    <script src="/assets/js/pages/form-masks.init.js"></script>
+    <!-- Plugins js-->
+    <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
+    <!-- <script src="/assets/libs/apexcharts/apexcharts.min.js"></script> -->
+
+    <script src="/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+
+    <!-- App js-->
+    <script src="/assets/js/app.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script>
+        let placaVeiculo = document.querySelector('input#placaVeiculo')
+        let valorVeiculo = document.querySelector('input#valorVeiculo')
+        let dataEntrada = document.querySelector('input#dataEntrada')
+        let addBtn = document.querySelector('button#addVeiculo')
+        let bodyVeiculos = document.querySelector('tbody#bodyVeiculos')
+
+        addBtn.addEventListener('click', event=>{
+
+            if(!placaVeiculo.value || !valorVeiculo.value || !dataEntrada.value){
+                alert('Necessário que os campos do veículo estejam preenchidos para adicionar ao contrato')
+            } else {
+                const placa = placaVeiculo.value
+
+                axios.get(`http://localhost:8081/veiculo/${placa}`).then(response=>{
+                    console.log(response)
+                    if(response.status != 200) {
+                        
+                    }
+
+                    let veiculos = response.data
+
+                    veiculos.forEach(veic=>{
+                        let tr = document.createElement('tr')
+                        tr.innerHTML = `
+                        <td tabindex="0" class="sorting_1">${veic.id}</td>
+                        <td>${veic.email}</td>
+                        <td>${veic.acesso}</td>
+                        <td>${veic.nome}</td>
+                        <td><a href="/painel/veiculo/1" class="btn btn-info">Ver mais</a></td>
+                        `
+                        bodyVeiculos.append(tr)
+                    })
+
+
+                }).catch(erro=>{
+                console.log(erro)
+                })
+            }
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#infoEncerrado').hide()
+            $('#infoProrrogado').hide()
+
+            $('#statusContrato').change(function(event){
+                if($(this).val() == 'Encerrado'){
+                    $('#infoEncerrado').show()
+                }
+                if($(this).val() == 'Prorrogado'){
+                    $('#infoProrrogado').show()
+                }
+            })
+            $('#confirmarProrrogar').change(function(){
+                console.log(1)
+            })
+        })
+    </script>
+    
+</body>
+</html>

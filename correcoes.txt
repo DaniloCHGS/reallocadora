@@ -1,0 +1,22 @@
+##Em Veículos
+	#Buscando placa de manutenção errada
+Estoque
+	#Dentro das informações do item não mostra valor em estoque correto
+	##Cadastrar quantidade junto ao item
+	#Balanço
+	#-Lançar no estoque
+		#Melhorar tela de lançamento (inputs)
+		#Colocar opção de mudança de fornecedor
+##Fornecedor
+	#Remover require do email
+Em veículos
+	#Contator de veiculos sem data de saida
+	Prorrogado
+	#Arrumar data exibição
+	##Ajustar ordem dos meses dentro de viculos
+Contratos
+	--> Adicionar botão de valor e data de recebendo
+	##Adicionar cidade
+	#Separar veiculos lançados de não lançados
+	#Organizar dados
+--> Arrumar estilização do sistema

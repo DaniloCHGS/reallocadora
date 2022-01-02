@@ -1,0 +1,148 @@
+<%-include('partials/_head.ejs')%>
+
+<body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+    
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <%-include('partials/_nav.ejs')  %>
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <%-include('partials/_sideBar.ejs')%>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page" id="veiculos">
+            <form class="content" method="post" action="/painel/fornecedor/cadastro">
+                
+                <!-- Start Content-->
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title"> Cadastro de Fornecedor</h4>
+                                <%-include('partials/_msg-sucesso.ejs')%>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-lg-6 col-md-4 col-sm-6 com-xm-12">
+                                    <div class="form-group">
+                                        <label for="">Empresa</label>
+                                        <input type="text" class="form-control" name="empresa">
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-4 col-sm-6 com-xm-12">
+                                    <div class="form-group">
+                                        <label for="">Cidade</label>
+                                        <select name="cidade" id="" class="form-control">
+                                            <option value="" selected disabled>Selecionar cidade</option>
+                                            <%cidades.forEach(cidade=>{ %>
+                                                <option value="<%=cidade.nome%>"><%=cidade.nome%></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="">Criar cidade</label>
+                                        <button type="button" class="btn btn-info btn-block" data-toggle="modal" data-target="#custom-modal">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="">Celular</label>
+                                        <input type="text" class="form-control" data-toggle="input-mask" data-mask-format="(00) 00000-0000" name="celular">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="">Telefone</label>
+                                        <input type="text" class="form-control" data-toggle="input-mask" data-mask-format="(00) 0000-0000" name="telefone">
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="">Email</label>
+                                        <input type="email" class="form-control" name="email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div> <span style="color:red;">*</span> Atenção, no mínimo 1 número de contato deve ser cadastrado</div>
+                            <br>
+                            <textarea name="desc" id="" cols="30" rows="10" class="form-control" placeholder="Descrição"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="submit" value="Cadastar fornecedor" class="btn btn-success mt-3">
+                        </div>
+                    </div>
+                </div>
+                <!-- container -->
+
+            </form> <!-- content -->
+
+            <%-include('partials/_footer.ejs')%>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+        <form class="modal fade" id="custom-modal" tabindex="-1" role="dialog" aria-hidden="true" method="post" action="/painel/fornecedor/cadastro/cidade">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="myCenterModalLabel">Criar cidade</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <form class="modal-body p-4">
+                        <input type="text" placeholder="Digite aqui o nome da cidade que deseja criar" class="form-control" name="nome">
+                        <input type="submit" value="Criar cidade" class="btn btn-success mt-3" style="float: right;">
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </form><!-- /.modal -->
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Vendor js -->
+    <script src="/assets/js/vendor.min.js"></script>
+
+    <!-- Plugins js-->
+    <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
+    <!-- <script src="/assets/libs/apexcharts/apexcharts.min.js"></script> -->
+
+    <script src="/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+
+    <!-- Plugins js -->
+    <script src="/assets/libs/jquery-mask-plugin/jquery.mask.min.js"></script>
+    <!-- Init js-->
+    <script src="/assets/js/pages/form-masks.init.js"></script>
+
+    <!-- App js-->
+    <script src="/assets/js/app.min.js"></script>
+
+    
+    
+</body>
+</html>

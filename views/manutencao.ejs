@@ -1,0 +1,312 @@
+    <%-include('partials/_head.ejs')%>
+    <!-- body css -->
+    <!-- Plugins css -->
+    <link href="../assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+
+    <body class="loading">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <%-include('partials/_nav.ejs')%>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <%-include('partials/_sideBar.ejs')%>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <button type="button" class="btn btn-success waves-effect waves-light mb-2" data-toggle="modal" data-target="#custom-modal">
+                                            Cadastradar Manutenção
+                                        </button>
+                                    </div>
+                                    <h4 class="page-title">Manutenção</h4>
+                                    <%-include('partials/_msg-sucesso.ejs')%>
+                                </div>
+                            </div>
+                        </div> 
+                        
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                
+                                        <div class="table-responsive">
+                                            <table class="table table-centered table-striped table-nowrap table-hover mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Data</th>
+                                                        <th>Km</th>
+                                                        <th>Descrição</th>
+                                                        <th>Placa</th>
+                                                        <th style="width: 82px;">Informações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% manutencoes.forEach(manutencao=>{ %>
+                                                        <tr>
+                                                            <td><%=manutencao.data%></td>
+                                                            <td><%=manutencao.km%></td>
+                                                            <td><%=manutencao.desc%></td>
+                                                            <td>
+                                                                <a href="/painel/red/veiculo/<%=manutencao.placa%>" style="display: flex;align-items: center;" target="_blank">
+                                                                    <%=manutencao.placa%>
+                                                                    <i data-feather="chevron-right"></i>
+                                                                </a>
+                                                            </td>
+                                                            <td> <a href="/painel/manutencao/gasto/<%=manutencao.id%>" class="btn btn-info">Ver mais</a> </td>
+                                                        </tr>
+                                                    <% }) %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                2015 - <script>document.write(new Date().getFullYear())</script> &copy; UBold theme by <a href="">Coderthemes</a> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-right footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+        <!-- Modal -->
+        <div class="modal fade" id="custom-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="myCenterModalLabel">Cadastrar Manutenção</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form id="criariUsuario" method="post" action="/painel/manutencao/cadastro">
+                            <div class="form-group">
+                                <label for="name">Placa do  veículo</label>
+                                <select name="placa" id="" class="form-control" required>
+                                    <option value="" selected disabled>Selecione uma placa</option>
+                                    <% veiculos.forEach(veiculo=>{ %>
+                                        <option value="<%=veiculo.placa%>"><%=veiculo.placa%></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Data</label>
+                                <input type="date" class="form-control" id="data" placeholder="Data" name="data" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Km</label>
+                                <input type="text" class="form-control" id="km" placeholder="Km" name="km" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Responsável</label>
+                                <input type="text" class="form-control" id="responsavel" placeholder="Responsavel" name="responsavel" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Local Serviço</label>
+                                <input type="text" class="form-control" id="local" placeholder="Local serviço" name="local" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Valor Mão de Obra</label>
+                                <input type="text" class="form-control" id="maoObra" placeholder="Valor Mão de Obra" name="maoObra" required>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea name="desc" id="" cols="30" rows="10" placeholder="Digite uma descrição" class="form-control" required></textarea>
+                            </div>
+
+                            <input type="hidden" name="usuario" value="<%=usuarioLogado.nome%>">
+                            <button type="submit" class="btn btn-success waves-effect waves-light">Criar</button>
+                            
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="editarManutencao" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="myCenterModalLabel">Editar Manutenção</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <% manutencoes.forEach(manutencao=>{ %>
+                            <form id="criariUsuario" class="editarManutencao" method="post" action="/painel/manutencao/editar" data-editar="<%=manutencao.id%>">
+                                <div class="form-group">
+                                    <label for="name">Placa do  veículo</label>
+                                    <select name="placa" id="" class="form-control" required>
+                                        <% veiculos.forEach(veiculo=>{ %>
+                                            <option value="<%=veiculo.placa%>" <%=(veiculo.placa == manutencao.placa) ? 'selected' : ' '%> ><%=veiculo.placa%></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Data</label>
+                                    <input type="date" class="form-control" id="data" placeholder="Data" name="data" required value="<%=manutencao.data%>">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Km</label>
+                                    <input type="text" class="form-control" id="km" placeholder="Km" name="km" required value="<%=manutencao.km%>">
+                                </div>
+
+                                <div class="form-group">
+                                    <textarea name="desc" id="" cols="30" rows="10" placeholder="Digite uma descrição" class="form-control" required><%=manutencao.desc%></textarea>
+                                </div>
+                                
+                                <div class="text-right">
+                                    <input type="hidden" name="id" value="<%=manutencao.id%>">
+                                    <button type="submit" class="btn btn-warning waves-effect waves-light">Editar</button>
+                                </div>
+                            </form>
+                        <% }) %>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <div class="modal fade" id="infosManutencao" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="myCenterModalLabel">Informações da manutenção</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <% manutencoes.forEach(manutencao=>{ %>
+                        <form class="modal-body p-4 infosManutencao" data-info="<%=manutencao.id%>">
+                            <%if(manutencao.data) {%>
+                            <label for="">Data</label>
+                            <p><%=manutencao.data%></p>
+                            <hr>
+                            <% } %>
+                            <%if(manutencao.km) {%>
+                            <label for="">Km</label>
+                            <p><%=manutencao.km%></p>
+                            <hr>
+                            <% } %>
+                            <%if(manutencao.placa) {%>
+                            <label for="">Placa</label>
+                            <p><%=manutencao.placa%></p>
+                            <hr>
+                            <% } %>
+                            <%if(manutencao.desc) {%>
+                            <label for="">Descrição</label>
+                            <p><%=manutencao.desc%></p>
+                            <% } %>
+
+                            <div class="row" style="display: flex;justify-content: flex-end;">
+                                <a href="javascript:void(0);" data-editar-filter="<%=manutencao.id%>" data-toggle="modal" data-target="#editarManutencao" data-dismiss="modal" aria-hidden="true" class="btn btn-warning waves-effect waves-light" style="margin-right: 10px;">Editar</a>
+                                <a href="/painel/manutencao/excluir/<%=manutencao.id%>" class="btn btn-danger waves-effect waves-light">Excluir</a>
+                            </div>
+                        </form>
+                    <% }) %>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+
+        <!-- Vendor js -->
+        <script src="../assets/js/vendor.min.js"></script>
+
+        <script src="../assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="../assets/libs/mohithg-switchery/switchery.min.js"></script>
+        <script src="../assets/libs/multiselect/js/jquery.multi-select.js"></script>
+        <script src="../assets/libs/select2/js/select2.min.js"></script>
+        <script src="../assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
+        <script src="../assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+        <script src="../assets/libs/bootstrap-select/js/bootstrap-select.min.js"></script>
+        <script src="../assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="../assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+        <!-- Init js-->
+        <script src="../assets/js/pages/form-advanced.init.js"></script>
+
+        <%-include('partials/_script_dataTable.ejs')%>
+
+        <!-- App js -->
+        <script src="../assets/js/app.min.js"></script>
+
+        <script>
+            let btnVerMais = [...document.querySelectorAll('[data-ver-mais]')]
+            let infos = [...document.querySelectorAll('form.infosManutencao')]
+            btnVerMais.forEach(btn=>{
+                btn.addEventListener('click', event=>{
+                    infos.forEach(info=>{
+                        if(info.getAttribute('data-info') != btn.getAttribute('data-ver-mais')) {
+                            info.style.display = 'none'
+                        } else {
+                            info.style.display = 'block'
+                        }
+                    })
+                })
+            })
+        </script>
+        <script>
+            let btnEditarFilter = [...document.querySelectorAll('[data-editar-filter]')]
+            let editar = [...document.querySelectorAll('form.editarManutencao')]
+            btnEditarFilter.forEach(btn=>{
+                btn.addEventListener('click', event=>{
+                    editar.forEach(edit=>{
+                        if(edit.getAttribute('data-editar') != btn.getAttribute('data-editar-filter')) {
+                            edit.style.display = 'none'
+                        } else {
+                            edit.style.display = 'block'
+                        }
+                    })
+                })
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,155 @@
+<%-include('partials/_head.ejs')%>
+
+<body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+    
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <%-include('partials/_nav.ejs')  %>
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <%-include('partials/_sideBar.ejs')%>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page" id="veiculos">
+            <div class="content">
+
+                <!-- Start Content-->
+                <form class="container-fluid" method="post" action="/painel/veiculo/editar">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title"> Editar veículo</h4>
+                                <%-include('partials/_msg-sucesso.ejs')%>
+                            </div>
+                        </div>
+                    </div> 
+                    
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Placa</label>
+                                <input type="text" class="form-control" value="<%=veiculo.placa%>" name="placa" placeholder="Sete digitos">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Renavan</label>
+                                <input type="text" class="form-control" name="renavan" value="<%=veiculo.renavan%>">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Marca</label>
+                                <input type="text" class="form-control" name="marca" value="<%=veiculo.marca%>">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Ano</label>
+                                <input type="number" class="form-control" name="ano" value="<%=veiculo.ano%>">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Modelo</label>
+                                <input type="text" class="form-control" name="modelo" value="<%=veiculo.modelo%>" >
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Tipo</label>
+                                <input type="text" class="form-control" name="tipo" value="<%=veiculo.tipo%>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Nome do fornecedor</label>
+                                <input type="text" class="form-control" name="nomeFornecedor" value="<%=veiculo.nomeFornecedor%>" >
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <label for="">Valor de compra</label>
+                                <input type="text" class="form-control" name="valorCompra" id="valorCompra" value="<%=veiculo.valorCompra%>" >
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="">Valor de venda</label>
+                                    <input type="text" class="form-control" name="valorVenda" value="<%=veiculo.valorVenda%>" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                            <label for="">Status</label>
+                                <select name="status" id="" class="form-control" data-status="<%=veiculo.status%>">
+                                    <option value="Locado" data-status="Locado">Locado</option>
+                                    <option value="Pátio" data-status="Pátio">Pátio</option>
+                                    <option value="Vendido" data-status="Vendido">Vendido</option>
+                                </select>
+                                <script>
+                                    let status = document.querySelector('select[data-status]').getAttribute('data-status')
+                                    let optionStatus = [...document.querySelectorAll('option[data-status]')]
+
+                                    optionStatus.forEach(opt=>{
+                                        if(opt.getAttribute('data-status') == status){
+                                            opt.setAttribute('selected', true)
+                                        }
+                                    })
+                                </script>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="hidden" name="id" value="<%=veiculo.id%>">
+                            <input type="submit" class="btn btn-warning" value="Salvar edição">
+                        </div>
+                    </div>
+                </form>
+                <!-- container -->
+
+            </div> <!-- content -->
+
+            <%-include('partials/_footer.ejs')%>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Right bar overlay-->
+    <div class="rightbar-overlay"></div>
+
+    <!-- Vendor js -->
+    <script src="/assets/js/vendor.min.js"></script>
+
+    <!-- Plugins js-->
+    <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
+    <!-- <script src="/assets/libs/apexcharts/apexcharts.min.js"></script> -->
+
+    <script src="/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+
+
+    <!-- App js-->
+    <script src="/assets/js/app.min.js"></script>
+
+    
+    
+</body>
+</html>

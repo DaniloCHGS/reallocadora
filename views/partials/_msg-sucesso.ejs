@@ -1,0 +1,12 @@
+<% if(sucesso != '') { %>
+    <div class="alert alert-success" style="width:max-content;">
+        <%=sucesso%>
+    </div>
+<% } %>
+<% if(erro != '') { %>
+    <div class="alert alert-danger">
+        <%=erro%>
+        <hr>
+        <%=erros%>
+    </div>
+<% } %>

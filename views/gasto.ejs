@@ -1,0 +1,457 @@
+    <%-include('partials/_head.ejs')%>
+    <!-- body css -->
+    <!-- Plugins css -->
+    <link href="../assets/libs/mohithg-switchery/switchery.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/selectize/css/selectize.bootstrap3.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/bootstrap-select/css/bootstrap-select.min.css" rel="stylesheet" type="text/css" />
+    <link href="../assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" type="text/css" />
+
+    <body class="loading">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <%-include('partials/_nav.ejs')%>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <%-include('partials/_sideBar.ejs')%>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+
+                                        <a class="btn btn-success" href="/painel/manutencao">Voltar</a>
+                                        <% if(usuarioLogado.acesso == 'adm') { %>
+                                           
+                                        <a class="btn btn-warning" href="" data-toggle="modal" data-target="#editarManutencao">Editar</a>
+
+                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#custom-modal">
+                                           Excluir
+                                        </button>
+                                        <%}%>
+
+                                    </div>
+                                    <h4 class="page-title">Gasto Manutenção</h4>
+                                    <%-include('partials/_msg-sucesso.ejs')%>
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+
+                                        <div class="row">
+
+                                            <div class="col-lg-2">
+                                                <h4 class="page-title">Data</h4>
+                                                <p><%= manutencao.data%></p>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <h4 class="page-title">Km</h4>
+                                                <p><%= manutencao.km%></p>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <h4 class="page-title">Placa</h4>
+                                                <p><%= manutencao.placa%></p>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <h4 class="page-title">Funcionário</h4>
+                                                <p><%= manutencao.usuario%></p>
+                                            </div>
+                                            
+                                            <div class="col-lg-2">
+                                                <h4 class="page-title">Responsável</h4>
+                                                <p><%= manutencao.responsavel%></p>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <h4 class="page-title">Local de Manutenção</h4>
+                                                <p><%= manutencao.local%></p>
+                                            </div>
+
+                                            <div class="col-lg-2">
+                                                <h4 class="page-title">Valor Mão de Obra</h4>
+                                                <p><%= manutencao.maoObra%></p>
+                                            </div>
+
+                                            <div class="col-lg-2" style="border:1px solid #f7b84b;">
+                                                <h4 class="page-title">Total da manutenção</h4>
+                                                <p><%=(manutencao.valorTotal) ? 'R$..: '+manutencao.valorTotal : 'Nenhum item adicionado';%></p>
+                                                <input type="hidden" name="" id="totalManutencao" value="<%=manutencao.valorTotal%>" >
+                                            </div>
+
+                                            <div class="col-lg-12">
+                                                <h4 class="page-title">Descrição</h4>
+                                                <p><%= manutencao.desc%></p>
+                                            </div>
+
+                                            <hr>
+
+                                            <% if(!manutencao.fechamento) { %>
+                                            <div class="col-lg-12">
+                                                <div class="custom-control custom-radio" style="display:flex;align-items: center;">
+                                                    <input type="radio" id="confimar" name="confirmarManutencao" class="custom-control-input" value="true">
+                                                    <label class="custom-control-label" for="confimar">
+                                                        Deseja finalizar esta manutenção?
+                                                    </label>
+                                                    <button id="finalizatBtn" class="btn btn-success ml-3" disabled  data-toggle="modal" data-target="#confirmarManutencaoModal">
+                                                        Sim
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                            <% if(manutencao.fechamento) { %>
+                                            <div class="col-lg-4" style="border:1px solid #f1556c;display: flex;flex-direction: column;align-items: center;">
+                                                <h4 class="page-title">Manutenção finalizada!</h4>
+                                                <p><%=manutencao.fechamento%></p>
+                                            </div>
+                                            <% } %>
+                                            
+                                        </div>
+                                    </div> <!-- end card-body-->
+                                </div> <!-- end card-->
+                            </div> <!-- end col -->
+                        </div>
+
+                        <% if(!manutencao.fechamento) { %>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body" style="max-height: 410px;overflow-y: auto;">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="page-title-box">
+                                                    <h4 class="page-title">Itens/estoque - Incluir/manutenção</h4>
+                                                </div>
+                                                <table id="" class="table dt-responsive nowrap w-100 table-striped basic-datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nome</th>
+                                                            <th>Codigo</th>
+                                                            <th>Valor/unidade</th>
+                                                            <th>Quantidade em Estoque</th>
+                                                            <th>Quantidade</th>
+                                                        </tr>
+                                                    </thead>
+                                                
+                                                
+                                                    <tbody>
+                                                        <%itens.forEach(item=>{ %>
+                                                            <% if(item.qtdItem > 0) {%>
+                                                                <tr>
+                                                                    <td><%=item.nomeItem%></td>
+                                                                    <td><%=item.codigo%></td>
+                                                                    <td><%=item.valorItem%></td>
+                                                                    <td id="qtdEstoque<%=item.id%>"><%=item.qtdItem%></td>
+                                                                    <td>
+                                                                        <form class="input-group addItem" data-val="<%=item.valorItem%>" id="<%=item.id%>" method="post" action="/painel/manutencao/gasto/incluir">
+                                                                            <input type="hidden" name="id_manutencao" value="<%=manutencao.id%>">
+                                                                            <input type="hidden" name="nome" value="<%=item.nomeItem%>">
+                                                                            <input type="hidden" name="codigo" value="<%=item.codigo%>">
+                                                                            <input type="hidden" name="valor" value="<%=item.valorItem%>">
+                                                                            <input type="hidden" name="resultado" id="<%=item.id%>" >
+                                                                            <input type="hidden" name="totalManutencao" id="totalManutencao<%=item.id%>">
+                                                                            
+                                                                            <input name="qtdItem" id="<%=item.id%>" type="number" class="form-control" placeholder="Quantidade utilizada" aria-label="Quantidade utilizada" required="">
+                                                                            <div class="input-group-append">
+                                                                                <input type="submit" value="Incluir"  class="btn btn-success waves-effect waves-light">
+                                                                            </div>
+                                                                        </form>
+                                                                    </td>
+                                                                </tr>
+                                                            <%}%>
+                                                        <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="page-title-box">
+                                                    <h4 class="page-title">Itens inclusos</h4>
+                                                </div>
+                                                <table id="" class="table dt-responsive nowrap w-100 table-striped basic-datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nome</th>
+                                                            <th>Codigo</th>
+                                                            <th>Valor/unidade</th>
+                                                            <th>Quantidade</th>
+                                                            <th>Total</th>
+                                                            <% if(!manutencao.fechamento) { %>
+                                                            <th>Ação</th>
+                                                            <% } %>
+                                                        </tr>
+                                                    </thead>
+                                                
+                                                
+                                                    <tbody>
+                                                        <%gastos.forEach(gasto=>{ %>
+                                                            <tr>
+                                                                <td><%=gasto.nome%></td>
+                                                                <td><%=gasto.codigo%></td>
+                                                                <td><%=gasto.valor%></td>
+                                                                <td><%=gasto.quantidade%></td>
+                                                                <td class="gasto-total"><%=gasto.total%></td>
+                                                                <% if(!manutencao.fechamento) { %>
+                                                                <td>
+                                                                    <form action="/painel/manutencao/gasto/remover/" method="POST" class="removerItem">
+                                                                        <input type="hidden" name="manutencaoId" value="<%=manutencao.id%>">
+                                                                        <input type="hidden" name="gastoId" value="<%=gasto.id%>">
+                                                                        <input type="hidden" name="codigoItem" value="<%=gasto.codigo%>">
+                                                                        <input type="hidden" name="quantidadeItem" value="<%=gasto.quantidade%>">
+                                                                        <input type="hidden" name="valor" value="<%=gasto.valor%>">
+
+                                                                        <input type="submit" value="Remover" class="btn btn-warning">
+                                                                    </form>
+                                                                </td>
+                                                                <% } %>
+                                                            </tr>
+                                                        <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end row -->
+                        
+                    </div> <!-- container -->
+
+                </div> <!-- content -->
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                2015 - <script>document.write(new Date().getFullYear())</script> &copy; UBold theme by <a href="">Coderthemes</a> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="text-md-right footer-links d-none d-sm-block">
+                                    <a href="javascript:void(0);">About Us</a>
+                                    <a href="javascript:void(0);">Help</a>
+                                    <a href="javascript:void(0);">Contact Us</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+
+        </div>
+        <!-- END wrapper -->
+        <!-- Modal -->
+        <% if(usuarioLogado.acesso == 'adm') { %>
+        <div class="modal fade" id="custom-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="myCenterModalLabel">Deseja excluir?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <a href="/painel/manutencao/excluir/<%=manutencao.id%>" class="btn btn-block btn-danger">Sim, excluir!</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <%}%>
+        <div class="modal fade" id="confirmarManutencaoModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="myCenterModalLabel">Deseja finalizar?</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <p style="color:red;"><i>Atenção, ao finalizar a manutenção, não poderá incluir e remover mais gastos ao mesmo.</i></p>
+                        <a href="/painel/manutencao/finalizar/<%=manutencao.id%>" class="btn btn-block btn-warning">Sim, finalizar!</a>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <div class="modal fade" id="editarManutencao" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-light">
+                        <h4 class="modal-title" id="myCenterModalLabel">Cadastrar Manutenção</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <form id="criariUsuario" method="post" action="/painel/manutencao/editar/">
+                            <div class="form-group">
+                                <label for="name">Placa do  veículo</label>
+                                <select name="placa" id="" class="form-control" required>
+                                    <option value="" disabled>Selecione uma placa</option>
+                                    <% veiculos.forEach(veiculo=>{ %>
+                                        <option value="<%=veiculo.placa%>" <%=(veiculo.placa == manutencao.placa) ? 'selected' : '';%> ><%=veiculo.placa%></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Data</label>
+                                <input type="date" class="form-control" id="data" placeholder="Data" name="data" value="<%=manutencao.data%>" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Km</label>
+                                <input type="text" class="form-control" id="km" placeholder="Km" name="km" value="<%=manutencao.km%>" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Responsável</label>
+                                <input type="text" class="form-control" id="responsavel" placeholder="Responsavel" name="responsavel" required value="<%=manutencao.responsavel%>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Local Serviço</label>
+                                <input type="text" class="form-control" id="local" placeholder="Local serviço" name="local" required value="<%=manutencao.local%>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Valor Mão de Obra</label>
+                                <input type="text" class="form-control" id="maoObra" placeholder="Valor Mão de Obra" name="maoObra" required>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea name="desc" id="" cols="30" rows="10" placeholder="Digite uma descrição" class="form-control" required><%=manutencao.desc%></textarea>
+                            </div>
+
+                            <input type="hidden" name="usuario" value="<%=manutencao.usuario%>">
+                            <input type="hidden" name="id" value="<%=manutencao.id%>">
+                            <button type="submit" class="btn btn-success waves-effect waves-light">Criar</button>
+                            
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        
+
+        
+        <!-- Vendor js -->
+        <script src="/assets/js/vendor.min.js"></script>
+
+        <script src="/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+        <script src="/assets/libs/mohithg-switchery/switchery.min.js"></script>
+        <script src="/assets/libs/multiselect/js/jquery.multi-select.js"></script>
+        <script src="/assets/libs/select2/js/select2.min.js"></script>
+        <script src="/assets/libs/jquery-mockjax/jquery.mockjax.min.js"></script>
+        <script src="/assets/libs/devbridge-autocomplete/jquery.autocomplete.min.js"></script>
+        <script src="/assets/libs/bootstrap-select/js/bootstrap-select.min.js"></script>
+        <script src="/assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js"></script>
+        <script src="/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js"></script>
+
+        <%-include('partials/_script_dataTable.ejs')%>
+
+        <!-- App js -->
+        <script src="/assets/js/app.min.js"></script>
+
+        <script>
+            $(document).ready(function(){
+                $('.addItem').submit(function(event){
+                    event.preventDefault()
+                    
+                    let id = $(this).attr('id')
+                    
+                    let valor = $(this).attr('data-val')
+                    valor = parseFloat(valor)
+
+                    let qtds = [...document.querySelectorAll('input[name="qtdItem"]')]
+                    
+                    let qtd = qtds.filter(item=>{
+                        if(item.id == id){
+                            return item
+                        }
+                    })
+
+                    let emEstoque = document.getElementById(`qtdEstoque${id}`).innerText
+                    
+                    qtd = parseInt(qtd[0].value)
+                    
+                    if((qtd > 0) && (qtd <= emEstoque)){
+                        let resultado = valor * qtd
+                        let results = [...document.querySelectorAll('input[name="resultado"]')]
+                        
+                        results.forEach(re=>{
+                            if(re.id == id){
+                                re.value = resultado
+                            }
+                        })
+
+                        let grupoTotal = [...document.querySelectorAll('td.gasto-total')]
+                        let soma = 0
+
+                        grupoTotal.forEach(tt=>{
+                            let ttValor = (tt.innerHTML) ? parseFloat(tt.innerHTML) : ''
+                            if(ttValor != '') {
+                                soma = soma + ttValor
+                            }
+                        })
+
+                        var total = $('#totalManutencao').val()
+                        total = parseInt(total)
+
+                        soma = soma + resultado + total
+
+                        document.getElementById(`totalManutencao${id}`).value = soma
+
+                        console.log(soma)
+
+                        let form = document.querySelector(`form[id='${id}']`)
+                        form.submit()
+                    } else {
+                        alert('Quantidade em estoque menor que quantidade para inclusão ou valor inválido')
+                    }
+                    
+                })
+
+                $('#confimar').click(function(event){
+                    $('#finalizatBtn').attr('disabled', false)
+                })
+            })
+        </script>
+    </body>
+</html>

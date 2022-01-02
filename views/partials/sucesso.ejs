@@ -1,0 +1,12 @@
+
+<% sucesso.forEach(suss=>{%>
+    <div class="alert alert-danger">
+        <%suss.texto%>
+    </div>
+<%})%>
+
+<%if(erro){%>
+    <div class="alert alert-danger">
+        <% erro %>
+    </div>
+<%}%>

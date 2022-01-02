@@ -1,0 +1,228 @@
+    <%-include('partials/_head.ejs')%>
+    <body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+        
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Topbar Start -->
+            <%-include('partials/_nav.ejs')  %>
+            <!-- end Topbar -->
+
+            <!-- ========== Left Sidebar Start ========== -->
+            <%-include('partials/_sideBar.ejs')%>
+            <!-- Left Sidebar End -->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page" id="veiculos">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="page-title-box">
+                                    <div class="page-title-right">
+                                        <a class="btn btn-success" href="/painel/estoque/cadastro">Cadastro de item</a>
+                                    </div>
+                                    <h4 class="page-title">Estoque <%=teste.t%></h4>
+                                    <%-include('partials/_msg-sucesso.ejs')%>
+                                </div>
+                            </div>
+                        </div> 
+                        
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a href="#estoque" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                    Itens em Estoque
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#itens" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    Itens Cadastrados
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#lancamento" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    Lançar no estoque
+                                                </a>
+                                            </li>
+                                        </ul>
+
+                                        <div class="tab-content">
+                                            <div class="tab-pane show active" id="estoque">
+                                                <table id="" class="table dt-responsive nowrap w-100 table-striped basic-datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nome</th>
+                                                            <th>Código</th>
+                                                            <th>Fabricante</th>
+                                                            <th>Fornecedor</th>
+                                                            <th>Quantidade em estoque</th>
+                                                        </tr>
+                                                    </thead>
+                                                
+                                                
+                                                    <tbody>
+                                                        <%itens.forEach(item=>{ %>
+
+                                                            <% if(item.qtdItem !== '0') { %>
+                                                                <tr>
+                                                                    <td><%=item.nomeItem%></td>
+                                                                    <td><%=item.codigo%></td>
+                                                                    <td><%=item.fabricante%></td>
+                                                                    <td><%=item.fornecedor%></td>
+                                                                    <td><%=(item.qtdItem && item.qtdItem != 0) ? item.qtdItem : 'Não lançado'%></td>
+                                                                </tr>
+                                                            <% } %>
+                                                        
+                                                        <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="tab-pane" id="itens">
+                                                <table id="" class="table dt-responsive nowrap w-100 table-striped basic-datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nome</th>
+                                                            <th>Código</th>
+                                                            <th>Fabricante</th>
+                                                            <th>Fornecedor</th>
+                                                            <th>Valor</th>
+                                                            <th>Data última compra</th>
+                                                            <th>Valor última compra</th>
+                                                            <th>Quantidade em estoque</th>
+                                                            <th>Informações</th>
+                                                        </tr>
+                                                    </thead>
+                                                
+                                                
+                                                    <tbody>
+                                                        <%itens.forEach(item=>{ %>
+                                                        <tr>
+                                                            <td><%=item.nomeItem%></td>
+                                                            <td><%=item.codigo%></td>
+                                                            <td><%=item.fabricante%></td>
+                                                            <td><%=item.fornecedor%></td>
+                                                            <td><%=item.valorItem%></td>
+                                                            <td><%=item.ultimaCompra%></td>
+                                                            <td><%=item.valorUltimaCompra%></td>
+                                                            <td><%=(item.qtdItem && item.qtdItem != 0) ? item.qtdItem : 'Não lançado'%></td>
+                                                            <td>
+                                                                <a href="/painel/estoque/item/<%=item.id%>" class="btn btn-info">Ver mais</a>
+                                                            </td>
+                                                        </tr>
+                                                        <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="tab-pane" id="lancamento">
+                                                <table id="" class="table dt-responsive nowrap w-100 table-striped basic-datatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Nome</th>
+                                                            <th>Código</th>
+                                                            <th>Fabricante</th>
+                                                            <th>Fornecedor</th>
+                                                            <th>Quantidade em estoque</th>
+                                                            <th>Ação</th>
+                                                        </tr>
+                                                    </thead>
+                                                
+                                                
+                                                    <tbody>
+                                                        <%itens.forEach(item=>{ %>
+                                                            <tr>
+                                                                <div>
+                                                                    <input type="hidden" name="idItem" value="<%=item.id%>">
+                                                                    <td><%=item.nomeItem%></td>
+                                                                    <td><%=item.codigo%></td>
+                                                                    <td><%=item.fabricante%></td>
+                                                                    <td><%=item.fornecedor%></td>
+                                                                    <td><%=(item.qtdItem && item.qtdItem != 0) ? item.qtdItem : 'Não lançado'%></td>
+                                                                    <td style="width: 160px;">
+                                                                        <button class="btn btn-warning waves" data-lancar="<%=item.id%>" data-toggle="modal" data-target="#custom-modal-<%=item.id%>">Lançar</button>
+                                                                    </td>
+                                                                </div>
+                                                            </tr>
+                                                        <% }) %>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div>
+
+                    </div>
+                    <!-- container -->
+
+                </div> <!-- content -->
+
+                <%-include('partials/_footer.ejs')%>
+
+            </div>
+
+            <%itens.forEach(item=>{ %>
+            <form class="modal fade" id="custom-modal-<%=item.id%>" tabindex="-1" role="dialog" aria-hidden="true" action="/painel/estoque/lancamento" method="post">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-light">
+                            <h4 class="modal-title" id="myCenterModalLabel">Deseja lançar?</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                            <div class="modal-body p-4" data-lancar="<%=item.id%>">
+                                <p><%=item.nomeItem%></p>
+                                <div class="input-group">
+                                    <input type="text" name="valorUltimaCompra" id="" class="form-control" required placeholder="Valor da última compra">
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <input type="date" name="ultimaCompra" id="" class="form-control" required>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <input type="date" name="ultimaCompra" id="" class="form-control" required>
+                                </div>
+                                <br>
+                                <div class="input-group">
+                                    <input name="qtdItem" type="number" class="form-control" placeholder="Quantidade a estocar" aria-label="Quantidade a estocar" required>
+                                    <div class="input-group-append">
+                                        <input type="submit" value="Lançar" class="btn btn-success waves-effect waves-light">
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+            </form><!-- /.modal -->
+            <% }) %>
+
+
+        </div>
+        <!-- END wrapper -->
+
+        <!-- Vendor js -->
+        <script src="/assets/js/vendor.min.js"></script>
+
+        <!-- Plugins js-->
+        <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
+        <!-- <script src="/assets/libs/apexcharts/apexcharts.min.js"></script> -->
+
+        <script src="/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+
+        <%-include('partials/_script_dataTable.ejs')%>
+        <!-- third party js ends -->
+
+        <!-- App js-->
+        <script src="/assets/js/app.min.js"></script>
+        
+    </body>
+</html>

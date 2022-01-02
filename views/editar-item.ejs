@@ -1,0 +1,136 @@
+<%-include('partials/_head.ejs')%>
+
+<body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+    
+    <!-- Begin page -->
+    <div id="wrapper">
+
+        <!-- Topbar Start -->
+        <%-include('partials/_nav.ejs')  %>
+        <!-- end Topbar -->
+
+        <!-- ========== Left Sidebar Start ========== -->
+        <%-include('partials/_sideBar.ejs')%>
+        <!-- Left Sidebar End -->
+
+        <!-- ============================================================== -->
+        <!-- Start Page Content here -->
+        <!-- ============================================================== -->
+
+        <div class="content-page" id="veiculos">
+            <div class="content">
+
+                <!-- Start Content-->
+                <form class="container-fluid" method="post" action="/painel/estoque/editar/item">
+                    <div class="row">
+                        
+                        <div class="col-12">
+                            <div class="page-title-box">
+                                <h4 class="page-title"> Editar de item</h4>
+                            </div>
+                            <%-include('partials/_msg-sucesso.ejs')%>
+                        </div>
+                    </div> 
+                    
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Código do item</label>
+                                <input type="text" class="form-control" name="codigo" value="<%=item.codigo%>">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Nome do item</label>
+                                <input type="text" class="form-control" name="nomeItem" value="<%=item.nomeItem%>">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Fabricante</label>
+                                <input type="text" class="form-control" name="fabricante" value="<%=item.fabricante%>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-3 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Fornecedor</label>
+                                <select name="fornecedor" id="" class="form-control" value="<%=item.fornecedor%>">
+                                    <option value="Teste">Teste</option>
+                                    <% fornecedores.forEach(fornecedor=>{ %>
+                                        <option value="<%=fornecedor.empresa%>" <%=(item.fornecedor == fornecedor.empresa) ? 'selected' : '' %> ><%=fornecedor.empresa%></option>
+                                    <% }) %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Valor do item</label>
+                                <input type="text" class="form-control" name="valorItem" value="<%=item.valorItem%>">
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-4 col-sm-6 com-xm-12">
+                            <div class="form-group">
+                                <label for="">Última compra</label>
+                                <input type="date" name="ultimaCompra" class="form-control" value="<%=item.ultimaCompra%>">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-12">
+                            <div class="form-group">
+                               <textarea name="desc" id="" cols="30" rows="10" class="form-control" placeholder="Descrição"><%=item.desc%></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <input type="hidden" name="id" value="<%=item.id%>">
+                            <input type="submit" class="btn btn-warning waves-effect waves-light" value="Editar Item">
+                        </div>
+                    </div>
+                </form>
+                <!-- container -->
+
+            </div> <!-- content -->
+
+            <%-include('partials/_footer.ejs')%>
+
+        </div>
+
+        <!-- ============================================================== -->
+        <!-- End Page content -->
+        <!-- ============================================================== -->
+
+
+    </div>
+    <!-- END wrapper -->
+
+    <!-- Vendor js -->
+    <script src="/assets/js/vendor.min.js"></script>
+
+    <!-- Plugins js -->
+    <script src="/assets/libs/jquery-mask-plugin/jquery.mask.min.js"></script>
+
+    <script src="/assets/libs/autonumeric/autoNumeric-min.js"></script>
+
+    <!-- Init js-->
+    <script src="/assets/js/pages/form-masks.init.js"></script>
+
+    <!-- Plugins js-->
+    <script src="/assets/libs/flatpickr/flatpickr.min.js"></script>
+    <!-- <script src="/assets/libs/apexcharts/apexcharts.min.js"></script> -->
+
+    <script src="/assets/libs/selectize/js/standalone/selectize.min.js"></script>
+
+
+    <!-- App js-->
+    <script src="/assets/js/app.min.js"></script>
+
+    
+    
+</body>
+</html>
