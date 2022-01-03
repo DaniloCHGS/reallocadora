@@ -55,11 +55,11 @@ mesController.get('/painel/contrato/mes/:id', authenticated, (req, res)=>{
 mesController.post('/painel/contrato/mes/pagamento', authenticated, (req, res)=>{
 
     let {data_pagamento, valor_pagamento, id} = req.body
-    res.send({data_pagamento, valor_pagamento, id})
-    // mesContratos.update({data_pagamento, valor_pagamento}, {where: id}).then(()=>{
-    //     req.flash('sucesso', 'Pagamento adicionado com sucesso!')
-    //     res.redirect(`/painel/contrato/mes/${id}`)
-    // }).catch(erro=>{console.log(erro)})
+    // res.send({data_pagamento, valor_pagamento, id})
+    mesContratos.update({data_pagamento, valor_pagamento}, {where: {id}}).then(()=>{
+        req.flash('sucesso', 'Pagamento adicionado com sucesso!')
+        res.redirect(`/painel/contrato/mes/${id}`)
+    }).catch(erro=>{console.log(erro)})
 })
 
 module.exports = mesController
