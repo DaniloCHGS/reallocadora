@@ -1,6 +1,6 @@
 ##Em Ve�culos
 	#Buscando placa de manuten��o errada
-Estoque
+##Estoque
 	#Dentro das informa��es do item n�o mostra valor em estoque correto
 	##Cadastrar quantidade junto ao item
 	#Balan�o
@@ -14,9 +14,9 @@ Em ve�culos
 	Prorrogado
 	#Arrumar data exibi��o
 	##Ajustar ordem dos meses dentro de viculos
-Contratos
+##Contratos
 	#Adicionar bot�o de valor e data de recebendo
 	##Adicionar cidade
 	#Separar veiculos lan�ados de n�o lan�ados
 	#Organizar dados
---> Arrumar estiliza��o do sistema
+##Arrumar estiliza��o do sistema

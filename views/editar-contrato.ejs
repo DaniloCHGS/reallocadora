@@ -47,10 +47,10 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
-                                    <form class="form-group">
+                                    <div class="form-group">
                                         <label for="">Empenho</label>
                                         <input type="text" class="form-control" name="empenho" value=<%=contrato.empenho%>>
-                                    </f>
+                                    </div>
                                 </div>
                                 <div class="col-lg-4 col-md-4 col-sm-6 com-xm-12">
                                     <div class="form-group">
@@ -114,7 +114,6 @@
                                         <label for="">Status</label>
                                         <select name="status" id="statusContrato" class="form-control" data-status="<%=contrato.status%>">
                                             <option value="Ativo" <%=(contrato.status == 'Ativo') ? 'selected' : ''%> >Ativo</option>
-                                            <option value="Prorrogado" <%=(contrato.status == 'Prorrogado') ? 'selected' : ''%> >Prorrogado</option>
                                             <option value="Encerrado" <%=(contrato.status == 'Encerrado') ? 'selected' : ''%> >Encerrado</option>
                                         </select>
                                         <!-- <script>
