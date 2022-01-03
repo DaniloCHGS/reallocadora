@@ -17,6 +17,12 @@ const mes_contratos = db.sequelize.define('mes_contratos', {
     },
     prorrogadoQtd: {
         type: db.Sequelize.STRING
+    },
+    data_pagamento: {
+        type: db.Sequelize.STRING
+    },
+    valor_pagamento: {
+        type: db.Sequelize.STRING
     }
 })
 module.exports = mes_contratos
