@@ -232,30 +232,6 @@
                                                 </table>
                                             </div>
                                         </div>
-
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <h4 class="page-title">Meses Prorrogados</h4>
-                                                <table class="table mb-0 table-striped basic-datatable">
-                                                    <thead>
-                                                        <th>Mês</th>
-                                                        <th>Informações</th>
-                                                    </thead>
-                                                    <tbody>
-                                                        <%meses.forEach(mes=>{%>
-                                                            <tr>
-                                                                <td class="mes" data-mes-prorrogado="<%=mes.mes%>"><%=mes.mes%></td>
-                                                                <td>
-                                                                    <a href="/painel/contrato/mes/<%=mes.id%>" class="btn btn-info">Ver mais</a>
-                                                                </td>
-                                                            </tr>
-                                                        <%})%>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        
-
                                     </div> <!-- end card body-->
                                 </div> <!-- end card -->
                             </div><!-- end col-->
@@ -353,12 +329,14 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     </div>
                     <div class="modal-body p-4">
-                        <form action="">
+                        <form action="/painel/contrato/mes/prorrogado" method="post">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <label for="">Digite a quantidade de meses a mais de prorrogação</label>
-                                        <input type="text" class="form-control" data-toggle="input-mask" data-mask-format="00">
+                                        <input type="text" name="termino" class="form-control" data-toggle="input-mask" data-mask-format="00">
+                                        <input type="hidden" name="inicio">
+                                        <input type="hidden" name="id_contrato" value="<%=contrato.id%>">
                                     </div>
                                     <div class="form-group">
                                         <input type="submit" value="Concluir" class="btn btn-success btn-block">
@@ -522,6 +500,14 @@
                     console.log(`${msg}: ${arg}`)
                 }
             })
+        </script>
+
+        <script>
+            const dataMes = [...document.querySelectorAll("[data-mes]")]
+            const ultimoMes = dataMes.pop().getAttribute("data-mes")
+
+            const inicio = document.querySelector("[name='inicio']")
+            inicio.value = ultimoMes
         </script>
         
     </body>

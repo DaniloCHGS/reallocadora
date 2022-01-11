@@ -21,62 +21,107 @@ contratosController.get('/painel/contrato/cadastro', authenticated, (req, res)=>
 
 contratosController.post('/painel/contrato/cadastro', authenticated, (req, res)=>{
     let erros = ''
-        let erro = 0
-    
-        const errosFlash = (str) =>{
-            erro++
-            erros = (!erros) ? erros = erros + str : erros = erros + ` / ${str}`
-        }
-        
-        const notValue = (value, txt) => {
-            if(!value) errosFlash(txt)
-        }
-    
-        let {numero, orgao, empenho, edital, processo, cidade, contratante, inicio, termino, status} = req.body
-    
-        notValue(numero, 'Número não preenchido')
-        notValue(orgao, 'Orgão não preenchido')
-        notValue(empenho, 'Empenho não preenchido')
-        notValue(edital, 'Edital não preenchido')
-        notValue(processo, 'Processo não preenchido')
-        notValue(cidade, 'Cidade não preenchida')
-        notValue(contratante, 'Contratante não preenchido')
-        notValue(inicio, 'Inicio do Contrato não preenchido')
-        notValue(termino, 'Termino do Contrato não preenchido')
-        notValue(status, 'Status não preenchido')
+    let erro = 0
 
-        // let qtdMeses = termino[6]
-        
-        if(erro > 0) {
-            req.flash('erro', 'Erro ao cadastrar contrato. Favor, reenviar o formulário de forma correta')
-            req.flash('erros', erros)
-            res.redirect('/painel/contrato/cadastro')
-        } else {
-            contratos.create({numero, orgao, empenho, edital, processo, cidade, contratante, inicio, termino, status}).then(()=>{
-                contratos.findOne({where:{numero, orgao, empenho, edital, processo, cidade, contratante, inicio, termino, status}}).then(contrato=>{
-                    console.log('%%%%%%%%%%%%%%%%%')
- 
-                    var primeiroRegistro = true
-                    console.log(primeiroRegistro)
+    const errosFlash = (str) =>{
+        erro++
+        erros = (!erros) ? erros = erros + str : erros = erros + ` / ${str}`
+    }
+    
+    const notValue = (value, txt) => {
+        if(!value) errosFlash(txt)
+    }
+
+    let {numero, orgao, empenho, edital, processo, cidade, contratante, inicio, termino, status} = req.body
+
+    notValue(numero, 'Número não preenchido')
+    notValue(orgao, 'Orgão não preenchido')
+    notValue(empenho, 'Empenho não preenchido')
+    notValue(edital, 'Edital não preenchido')
+    notValue(processo, 'Processo não preenchido')
+    notValue(cidade, 'Cidade não preenchida')
+    notValue(contratante, 'Contratante não preenchido')
+    notValue(inicio, 'Inicio do Contrato não preenchido')
+    notValue(termino, 'Termino do Contrato não preenchido')
+    notValue(status, 'Status não preenchido')
+
+    // let qtdMeses = termino[6]
+    
+    if(erro > 0) {
+        req.flash('erro', 'Erro ao cadastrar contrato. Favor, reenviar o formulário de forma correta')
+        req.flash('erros', erros)
+        res.redirect('/painel/contrato/cadastro')
+    } else {
+        contratos.create({numero, orgao, empenho, edital, processo, cidade, contratante, inicio, termino, status}).then(()=>{
+            contratos.findOne({where:{numero, orgao, empenho, edital, processo, cidade, contratante, inicio, termino, status}}).then(contrato=>{
+                console.log('%%%%%%%%%%%%%%%%%')
+
+                var primeiroRegistro = true
+                console.log(primeiroRegistro)
+                
+                let mesCriado = inicio
+                mesContratos.create({id_contrato:contrato.id, mes: inicio}).then(()=>{}).catch(erro=>{console.log(erro)})
+
+                for(let i = 1; i < contrato.termino; i++){
                     
-                    let mesCriado = inicio
-                    mesContratos.create({id_contrato:contrato.id, mes: inicio}).then(()=>{}).catch(erro=>{console.log(erro)})
+                    var tratativa = mesCriado.split('-')
+                    var mes = parseInt(tratativa[0])
+                    var ano = parseInt(tratativa[1])
+                    var mesAno = somaMesAno(mes, ano)
+                    mesCriado = mesAno
+                    mesContratos.create({id_contrato:contrato.id, mes: mesAno}).then(()=>{}).catch(erro=>{console.log(erro)})
 
-                    for(let i = 1; i < contrato.termino; i++){
-                        
-                        var tratativa = mesCriado.split('-')
-                        var mes = parseInt(tratativa[0])
-                        var ano = parseInt(tratativa[1])
-                        var mesAno = somaMesAno(mes, ano)
-                        mesCriado = mesAno
-                        mesContratos.create({id_contrato:contrato.id, mes: mesAno}).then(()=>{}).catch(erro=>{console.log(erro)})
-
-                    }
-                    req.flash('sucesso', 'Contrato criado com sucesso!')
-                    res.redirect('/painel/contratos')
-                }).catch(erro=>{console.log(erro)})
+                }
+                req.flash('sucesso', 'Contrato criado com sucesso!')
+                res.redirect('/painel/contratos')
             }).catch(erro=>{console.log(erro)})
+        }).catch(erro=>{console.log(erro)})
+    }
+})
+contratosController.post('/painel/contrato/mes/prorrogado', authenticated, (req, res)=>{
+    let erros = ''
+    let erro = 0
+
+    const errosFlash = (str) =>{
+        erro++
+        erros = (!erros) ? erros = erros + str : erros = erros + ` / ${str}`
+    }
+    
+    const notValue = (value, txt) => {
+        if(!value) errosFlash(txt)
+    }
+
+    let {inicio, termino, id_contrato} = req.body
+
+    notValue(inicio, 'Inicio do Contrato não preenchido')
+    notValue(termino, 'Termino do Contrato não preenchido')
+
+    const status = "Prorrogado"
+
+    // res.send({inicio, termino, id_contrato})
+
+    // let qtdMeses = termino[6]
+    
+    if(erro > 0) {
+        req.flash('erro', 'Erro ao cadastrar contrato. Favor, reenviar o formulário de forma correta')
+        req.flash('erros', erros)
+        res.redirect('/painel/contrato/cadastro')
+    } else {
+        let mesCriado = inicio
+
+        for(let i = 1; i < termino; i++){
+            
+            var tratativa = mesCriado.split('-')
+            var mes = parseInt(tratativa[0])
+            var ano = parseInt(tratativa[1])
+            var mesAno = somaMesAno(mes, ano)
+            mesCriado = mesAno
+            mesContratos.create({id_contrato, mes: mesAno, status}).then(()=>{}).catch(erro=>{console.log(erro)})
+
         }
+        req.flash('sucesso', 'Mês prorrogado com sucesso!')
+        res.redirect('/painel/contratos')
+    }
 })
 
 function ajusteMes(mes){ return (mes.length == 1) ? `0${mes}` : mes }
