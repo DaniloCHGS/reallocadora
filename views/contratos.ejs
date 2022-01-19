@@ -1,4 +1,6 @@
     <%-include('partials/_head.ejs')%>
+    <link href="assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
         
         <!-- Begin page -->
@@ -37,7 +39,7 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <table id="" class="table dt-responsive nowrap w-100 table-striped basic-datatable">
+                                        <table id="datatable-buttons" class="table dt-responsive nowrap w-100 table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>Número</th>
@@ -100,6 +102,12 @@
         <script src="/assets/libs/selectize/js/standalone/selectize.min.js"></script>
 
         <%-include('partials/_script_dataTable.ejs')%>
+
+        <script src="assets/libs/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
+        <script src="assets/libs/datatables.net-buttons-bs4/js/buttons.bootstrap4.min.js"></script>
+        <script src="assets/libs/datatables.net-buttons/js/buttons.html5.min.js"></script>
+        <script src="assets/libs/datatables.net-buttons/js/buttons.flash.min.js"></script>
+        <script src="assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
         <!-- third party js ends -->
 
         <!-- App js-->

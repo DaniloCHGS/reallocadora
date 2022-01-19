@@ -12,7 +12,7 @@ const manutencaoController = require('./routes/manutencaoController')
 const mesController = require('./routes/mesController')
 const estoqueController = require('./routes/estoqueController')
 const loginController = require('./routes/loginController')
-const apiController = require('./api/api')
+const relatorioController = require('./routes/relatorioController')
 
 //Sessão
 const session = require('express-session')
@@ -69,7 +69,7 @@ app.use('/', usuariosController)
 app.use('/', manutencaoController)
 app.use('/', estoqueController)
 app.use('/', mesController)
-app.use('/relatorio', apiController)
+app.use('/', relatorioController)
 
 app.use(function (req, res, next) {
     res.status(404).redirect('/erro/404')
