@@ -103,13 +103,13 @@ contratosController.post('/painel/contrato/mes/prorrogado', authenticated, (req,
     // let qtdMeses = termino[6]
     
     if(erro > 0) {
-        req.flash('erro', 'Erro ao cadastrar contrato. Favor, reenviar o formulário de forma correta')
+        req.flash('erro', 'Erro ao prorrogar contrato. Favor, reenviar o formulário de forma correta')
         req.flash('erros', erros)
-        res.redirect('/painel/contrato/cadastro')
+        res.redirect('/painel/contrato')
     } else {
         let mesCriado = inicio
 
-        for(let i = 1; i < termino; i++){
+        for(let i = 0; i < termino; i++){
             
             var tratativa = mesCriado.split('-')
             var mes = parseInt(tratativa[0])

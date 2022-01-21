@@ -18,7 +18,7 @@ Em ve�culos
 	##Adicionar cidade
 	#Separar veiculos lan�ados de n�o lan�ados
 	#Organizar dados
-	---->Prorrogado
+	#Prorrogado
 	---->Somar dos valores totais
 ##Arrumar estiliza��o do sistema
----->Relatório
+##Relatório
