@@ -45,8 +45,8 @@ mesController.get('/painel/contrato/mes/:id', authenticated, (req, res)=>{
                         contrato,
                         veiculos,
                         manutencoes
-                    }).catch(erro=>{console.log(erro)})
-                })
+                    })
+                }).catch(erro=>{console.log(erro)})
             }).catch(erro=>{console.log(erro)})
         }).catch(erro=>{console.log(erro)})
     }).catch(erro=>{console.log(erro)})

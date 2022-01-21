@@ -20,14 +20,14 @@
                                     <div class="page-title-right">
                                         
                                         <a class="btn btn-success" href="/painel/contratos">Voltar</a>
-                                        
-                                        <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#prorrogar-modal">Prorrogar Contrato</a>
+                                        <%if(contrato.status != "Encerrado"){%>
+                                            <a class="btn btn-primary" href="#" data-toggle="modal" data-target="#prorrogar-modal">Prorrogar Contrato</a>
 
-                                        <a class="btn btn-warning" href="/painel/contrato/editar/<%=contrato.id%>">Editar</a>
-
-                                        <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#custom-modal">
-                                           Excluir
-                                        </button>
+                                            <a class="btn btn-warning" href="/painel/contrato/editar/<%=contrato.id%>">Editar</a>
+                                            <button type="button" class="btn btn-danger waves-effect waves-light" data-toggle="modal" data-target="#custom-modal">
+                                                Excluir
+                                            </button>
+                                        <%}%>
                                     </div>
                                     <h4 class="page-title">Contrato</h4>
                                     <%-include('partials/_msg-sucesso.ejs')%>

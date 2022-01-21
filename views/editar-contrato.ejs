@@ -1,5 +1,9 @@
 <%-include('partials/_head.ejs')%>
-
+<%if(contrato.status == "Encerrado"){%>
+    <script>
+        window.location.href=`/painel/contrato/<%=contrato.id%>`
+    </script>
+<%}%>
 <body class="loading" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "sidebar": { "color": "light", "size": "default", "showuser": false}, "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
     
     <!-- Begin page -->
