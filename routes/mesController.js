@@ -34,7 +34,7 @@ mesController.post('/painel/contrato/mes/novaparcela', authenticated, (req, res)
 mesController.get('/painel/contrato/mes/:id', authenticated, (req, res)=>{
     let {id} = req.params
     isNotId(res, id, '/painel/contratos')
-    
+    // Tras todas manutencoes destas placas onde a data é ao mescontrato
     mesContratos.findOne({where: {id}}).then(response=>{
         contratos.findOne({where:{id:response.id_contrato}}).then(contrato=>{
             contratoVeiculos.findAll({where: {idContrato: response.id_contrato}}).then(veiculos=>{
@@ -63,3 +63,12 @@ mesController.post('/painel/contrato/mes/pagamento', authenticated, (req, res)=>
 })
 
 module.exports = mesController
+// manutencao.findAll({where:{placa: veiculos.placa}}).then(manutencoes=>{
+//     res.render(`${view}mes`, {
+//         usuarioLogado: getUser(res),
+//         mes: response,
+//         contrato,
+//         veiculos,
+//         manutencoes
+//     })
+// }).catch(erro=>{console.log(erro)})

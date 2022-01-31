@@ -36,7 +36,7 @@
                         <div class="row">
                             <div class="col-xl-12">
                                 <div class="card">
-                                    <div class="card-body">
+                                    <div class="card-body" id="app">
                                         
                                         <div class="row">
                                             <div class="col-lg-2">
@@ -46,6 +46,9 @@
                                             <div class="col-lg-2">
                                                 <h4 class="page-title">Mês</h4>
                                                 <p><%=mes.mes%></p>
+                                                <%manutencoes.forEach(manutencao=>{%>
+                                                    <p><%=manutencao.data%></p>
+                                                <%})%>
                                                 <input type="hidden" name="" id="mes" value="<%=mes.mes%>">
                                             </div>
                                             
@@ -157,6 +160,7 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
 
+            <div class="infos" data-infos="{contatoId:<%=contrato.id%>}"></div>
 
         </div>
         <!-- END wrapper -->
@@ -178,6 +182,24 @@
         <!-- App js-->
         <script src="/assets/js/app.min.js"></script>
         <%-include('partials/_script_dataTable.ejs')%>
+
+        <script src="/assets/js/vue.js"></script>
+
+        <script>
+            const app = new Vue({
+                el: '#app',
+                data(){
+                    return {
+                        
+                    }
+                },
+                created(){
+                    const infosEl = document.querySelector('.infos')
+                    const infos = JSON.stringify(infosEl.getAttribute('data-infos'))
+                    console.log(infos.contratoId)
+                }
+            })
+        </script>
 
         <script>
             $(document).ready(function(){
