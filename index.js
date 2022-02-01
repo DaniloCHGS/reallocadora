@@ -73,4 +73,4 @@ app.use(function (req, res, next) {
     res.status(404).redirect('/erro/404')
 })
 
-app.listen(21033, ()=>{console.log('Servidor Node online')})
+app.listen(21033, ()=>{console.log('Servidor Node online - Reallocadora')})
